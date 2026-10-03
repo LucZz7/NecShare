@@ -1,0 +1,1 @@
+{"rules":{"codes":{"$code":{".read":true,".validate":"!newData.exists() || (newData.hasChildren(['owner', 'at']) && newData.child('owner').isString() && newData.child('at').isNumber())",".write":true}},"peers":{"$pid":{"inbox":{".read":true,".write":true}}},"presence":{"$pid":{".read":true,".write":true}},"signals":{"$pid":{".read":true,".write":true}}}}
