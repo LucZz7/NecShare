@@ -238,7 +238,7 @@
       if (typeof QRCode === "undefined" || !state.code) { card.hidden = true; return; }
       card.hidden = false;
       QRCode.toCanvas($("qrCanvas"), inviteLink(),
-        { width: 180, margin: 1, color: { dark: "#0a0a0f", light: "#ffffff" } },
+        { width: 132, margin: 1, color: { dark: "#0a0a0f", light: "#ffffff" } },
         function (err) { if (err) card.hidden = true; });
     } catch (e) { card.hidden = true; }
   }
@@ -340,10 +340,10 @@
     var list = $("reqList");
     var n = requestCount();
     $("reqCount").textContent = n;
+    $("reqPanel").hidden = n === 0;
     var badge = $("tabBadge");
     badge.hidden = n === 0;
     badge.textContent = n;
-    $("reqEmpty").hidden = n !== 0;
     list.innerHTML = "";
     Object.keys(state.requests).forEach(function (reqId) {
       var r = state.requests[reqId];
@@ -838,7 +838,7 @@
   function renderHistory() {
     var list = $("historyList");
     var h = lsGet("necshare_history_v1", []);
-    $("historyEmpty").hidden = h.length !== 0;
+    $("historyPanel").hidden = h.length === 0;
     list.innerHTML = "";
     h.forEach(function (e) {
       var row = document.createElement("div");
@@ -1416,7 +1416,7 @@
   function renderCallLog() {
     var list = $("callLogList");
     var log = lsGet("necshare_calls_v1", []);
-    $("callLogEmpty").hidden = log.length !== 0;
+    $("callLogPanel").hidden = log.length === 0;
     list.innerHTML = "";
     log.forEach(function (c) {
       var row = document.createElement("div");
@@ -1455,7 +1455,7 @@
     var devs = lsGet("necshare_devices_v1", []);
     // Never list ourselves.
     devs = devs.filter(function (d) { return d.id && d.id !== state.myId; });
-    $("deviceEmpty").hidden = devs.length !== 0;
+    $("devPanel").hidden = devs.length === 0;
     list.innerHTML = "";
     devs.forEach(function (d) {
       var row = document.createElement("div");
@@ -1582,15 +1582,6 @@
 
     // Files tab
     $("btnSendFiles").addEventListener("click", pickFiles);
-    $("btnReceive").addEventListener("click", function () {
-      var panel = $("activePanel");
-      if (panel.hidden && !isConnected()) { toast("Connect with a peer first"); return; }
-      if (panel.hidden) {
-        panel.hidden = false;
-        toast("Waiting for incoming files");
-      }
-      panel.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
     var dz = $("dropZone");
     dz.addEventListener("click", pickFiles);
     dz.addEventListener("keydown", function (e) {
