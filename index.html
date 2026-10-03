@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>NecShare — Private Peer-to-Peer Sharing</title>
-  <meta name="description" content="NecShare: private peer-to-peer chat, file sharing and calls. No accounts — connect with a code.">
+  <meta name="description" content="NecShare: private peer-to-peer file sharing, chat and calls. No accounts — connect with a code.">
   <meta name="theme-color" content="#050508">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -17,6 +20,7 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
+    <div class="vignette"></div>
   </div>
 
   <!-- Premium inline SVG icon system (line icons, no emoji) -->
@@ -90,6 +94,56 @@
         <path d="M4 10v4h4l5 4V6l-5 4z"/>
         <path d="M16.5 9a4.5 4.5 0 0 1 0 6M19 6.5a8 8 0 0 1 0 11"/>
       </symbol>
+      <symbol id="icon-files" viewBox="0 0 24 24">
+        <path d="M12 3 3 8l9 5 9-5z"/>
+        <path d="M3 12.5l9 5 9-5"/>
+        <path d="M3 17l9 5 9-5"/>
+      </symbol>
+      <symbol id="icon-tray-up" viewBox="0 0 24 24">
+        <path d="M12 15V4M6.5 9.5 12 4l5.5 5.5"/>
+        <path d="M4 17v2.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V17"/>
+      </symbol>
+      <symbol id="icon-tray-down" viewBox="0 0 24 24">
+        <path d="M12 4v11M6.5 9.5 12 15l5.5-5.5"/>
+        <path d="M4 17v2.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V17"/>
+      </symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.5"/>
+        <path d="M12 7.5V12l3 2"/>
+      </symbol>
+      <symbol id="icon-trash" viewBox="0 0 24 24">
+        <path d="M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7M6.5 7l.9 12.2A1.8 1.8 0 0 0 9.2 21h5.6a1.8 1.8 0 0 0 1.8-1.8L17.5 7"/>
+        <path d="M10 11v6M14 11v6"/>
+      </symbol>
+      <symbol id="icon-qr" viewBox="0 0 24 24">
+        <rect x="4" y="4" width="7" height="7" rx="1.5"/>
+        <rect x="13" y="4" width="7" height="7" rx="1.5"/>
+        <rect x="4" y="13" width="7" height="7" rx="1.5"/>
+        <path d="M13.5 13.5h2.5v2.5h-2.5zM18 13.5h2v2M13.5 18H16M17.5 16.5H20V20h-4v-2"/>
+      </symbol>
+      <symbol id="icon-up" viewBox="0 0 24 24">
+        <path d="M12 19V5M6 11l6-6 6 6"/>
+      </symbol>
+      <symbol id="icon-down" viewBox="0 0 24 24">
+        <path d="M12 5v14M6 13l6 6 6-6"/>
+      </symbol>
+      <symbol id="icon-device" viewBox="0 0 24 24">
+        <rect x="7" y="2.5" width="10" height="19" rx="2.5"/>
+        <path d="M10.8 18.6h2.4"/>
+      </symbol>
+      <symbol id="icon-nodes" viewBox="0 0 24 24">
+        <circle cx="6" cy="6" r="2.6"/>
+        <circle cx="18" cy="18" r="2.6"/>
+        <path d="M8.2 8.2l7.6 7.6"/>
+      </symbol>
+      <symbol id="icon-image" viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2.5"/>
+        <circle cx="9" cy="10" r="1.8"/>
+        <path d="M3.5 16.5 9 11l4 4 3-3 4.5 4.5"/>
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 24 24">
+        <path d="M8 5.5v13l11-6.5z"/>
+      </symbol>
     </defs>
   </svg>
 
@@ -102,54 +156,45 @@
 
     <main class="container">
 
-      <!-- ============ PAIR ============ -->
-      <section id="screen-pair" class="screen active">
-        <div class="glass-panel">
-          <h2 class="panel-title">Your Code</h2>
-          <p class="panel-sub">Share this code with someone you trust. It refreshes every 5 minutes and works only once.</p>
-          <div class="code-box">
-            <p class="code-label">Your pairing code</p>
-            <p class="code-value" id="myCode">------</p>
-            <p class="code-timer" id="codeTimer">refreshes in 05:00</p>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-ghost" id="btnCopyCode"><svg class="ic ic-sm"><use href="#icon-copy"/></svg>Copy Code</button>
-            <button class="btn btn-ghost" id="btnCopyLink"><svg class="ic ic-sm"><use href="#icon-link"/></svg>Copy Invite Link</button>
-          </div>
+      <!-- ============ FILES (default) ============ -->
+      <section id="screen-files" class="screen active">
+        <div class="hero-row">
+          <button class="hero-btn" id="btnSendFiles">
+            <span class="hero-ic"><svg class="ic ic-lg"><use href="#icon-tray-up"/></svg></span>
+            <span class="hero-title">Send Files</span>
+            <span class="hero-sub">Share with your peer</span>
+          </button>
+          <button class="hero-btn" id="btnReceive">
+            <span class="hero-ic"><svg class="ic ic-lg"><use href="#icon-tray-down"/></svg></span>
+            <span class="hero-title">Receive</span>
+            <span class="hero-sub">Incoming transfers</span>
+          </button>
+        </div>
+
+        <div class="glass-panel dropzone" id="dropZone" role="button" tabindex="0" aria-label="Drop files here or tap to browse">
+          <svg class="ic ic-xl"><use href="#icon-files"/></svg>
+          <p class="dz-title">Drag and drop files here</p>
+          <p class="dz-sub">or tap to browse — up to 100 MB per file</p>
+        </div>
+
+        <div class="glass-panel" id="activePanel" hidden>
+          <h2 class="panel-title"><span class="accent-bar"></span>Active Transfers</h2>
+          <div id="transferList"></div>
         </div>
 
         <div class="glass-panel">
-          <h2 class="panel-title">Connect</h2>
-          <p class="panel-sub">Enter a code shared with you to send a connection request.</p>
-          <label class="field-label" for="codeInput">Pairing code</label>
-          <input class="text-input" id="codeInput" maxlength="6" placeholder="ABC123"
-                 autocomplete="off" autocapitalize="characters" spellcheck="false">
-          <button class="btn btn-primary btn-glow btn-block" id="btnConnect">Connect</button>
-          <div class="form-error" id="connectError" hidden></div>
+          <h2 class="panel-title"><span class="accent-bar"></span>Transfer History
+            <button class="mini-btn" id="btnClearHistory"><svg class="ic ic-xs"><use href="#icon-trash"/></svg>Clear</button>
+          </h2>
+          <div id="historyList"></div>
+          <p class="empty-note" id="historyEmpty">No transfers yet.</p>
         </div>
 
-        <div class="glass-panel" id="waitingCard" hidden>
-          <h2 class="panel-title">Request Sent</h2>
-          <p class="panel-sub" id="waitingSub">Waiting for the other person to accept...</p>
-          <div class="waiting"><span class="spinner"></span><span id="waitingText">Waiting for approval</span></div>
-          <button class="btn btn-ghost btn-block" id="btnCancelReq">Cancel Request</button>
+        <div class="glass-panel" id="noPeerFiles">
+          <p class="empty-note">Not connected yet. Pair with a code to share files.</p>
+          <button class="btn btn-primary btn-block" id="btnGoConnect1">Go to Connect</button>
         </div>
-
-        <div class="glass-panel" id="reqHint" hidden>
-          <h2 class="panel-title">Connection Requests <span class="count-pill" id="reqHintCount">0</span></h2>
-          <p class="panel-sub">Someone wants to connect with you.</p>
-          <button class="btn btn-primary btn-block" id="btnGoRequests">View Requests</button>
-        </div>
-      </section>
-
-      <!-- ============ REQUESTS ============ -->
-      <section id="screen-requests" class="screen">
-        <div class="glass-panel">
-          <h2 class="panel-title">Connection Requests <span class="count-pill" id="reqCount">0</span></h2>
-          <p class="panel-sub">Accept a request to start a private peer-to-peer session.</p>
-          <div id="reqList"></div>
-          <p class="empty-note" id="reqEmpty">No pending requests.</p>
-        </div>
+        <input type="file" id="fileInputMulti" hidden multiple>
       </section>
 
       <!-- ============ CHAT ============ -->
@@ -173,18 +218,103 @@
 
         <div class="glass-panel" id="noPeerPanel">
           <p class="empty-note">Not connected yet. Pair with a code to start chatting.</p>
-          <button class="btn btn-primary btn-block" id="btnGoPair">Go to Pairing</button>
+          <button class="btn btn-primary btn-block" id="btnGoConnect0">Go to Connect</button>
         </div>
 
         <div id="chatArea" hidden>
           <div class="messages" id="messages" aria-live="polite"></div>
+          <div class="rec-bar" id="recBar" hidden>
+            <span class="rec-dot"></span>
+            <span class="rec-text">Recording</span>
+            <span class="rec-time" id="recTime">00:00</span>
+            <span class="rec-hint">Tap the mic again to stop and send</span>
+          </div>
           <div class="composer">
             <button class="icon-btn" id="btnAttach" aria-label="Attach file"><svg class="ic"><use href="#icon-attach"/></svg></button>
+            <button class="icon-btn" id="btnVoice" aria-label="Record voice message"><svg class="ic"><use href="#icon-mic"/></svg></button>
             <input class="chat-input" id="chatInput" placeholder="Type a message..." autocomplete="off" maxlength="2000">
             <button class="send-btn" id="btnSend" aria-label="Send message"><svg class="ic"><use href="#icon-send"/></svg></button>
           </div>
         </div>
-        <input type="file" id="fileInput" hidden>
+      </section>
+
+      <!-- ============ CALLS ============ -->
+      <section id="screen-calls" class="screen">
+        <div class="glass-panel" id="noPeerCalls">
+          <p class="empty-note">Not connected yet. Pair with a code to make calls.</p>
+          <button class="btn btn-primary btn-block" id="btnGoConnect2">Go to Connect</button>
+        </div>
+        <div id="callsArea" hidden>
+          <div class="hero-row">
+            <button class="hero-btn" id="btnCallVoice">
+              <span class="hero-ic"><svg class="ic ic-lg"><use href="#icon-phone"/></svg></span>
+              <span class="hero-title">Voice Call</span>
+              <span class="hero-sub">Crystal-clear audio</span>
+            </button>
+            <button class="hero-btn" id="btnCallVideo">
+              <span class="hero-ic"><svg class="ic ic-lg"><use href="#icon-video"/></svg></span>
+              <span class="hero-title">Video Call</span>
+              <span class="hero-sub">Face to face</span>
+            </button>
+          </div>
+          <div class="glass-panel">
+            <h2 class="panel-title"><span class="accent-bar"></span>Recent Calls</h2>
+            <div id="callLogList"></div>
+            <p class="empty-note" id="callLogEmpty">No calls yet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONNECT ============ -->
+      <section id="screen-connect" class="screen">
+        <div class="glass-panel">
+          <h2 class="panel-title"><span class="accent-bar"></span>Your Code</h2>
+          <p class="panel-sub">Share this code with someone you trust. It refreshes every 5 minutes and works only once.</p>
+          <div class="code-box">
+            <p class="code-label">Your pairing code</p>
+            <p class="code-value" id="myCode">------</p>
+            <p class="code-timer" id="codeTimer">refreshes in 05:00</p>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" id="btnCopyCode"><svg class="ic ic-sm"><use href="#icon-copy"/></svg>Copy Code</button>
+            <button class="btn btn-ghost" id="btnCopyLink"><svg class="ic ic-sm"><use href="#icon-link"/></svg>Copy Invite Link</button>
+          </div>
+          <div class="qr-wrap" id="qrCard" hidden>
+            <canvas id="qrCanvas" width="180" height="180"></canvas>
+            <p class="qr-sub">Scan to open the invite link</p>
+          </div>
+        </div>
+
+        <div class="glass-panel">
+          <h2 class="panel-title"><span class="accent-bar"></span>Connect</h2>
+          <p class="panel-sub">Enter a code shared with you to send a connection request.</p>
+          <label class="field-label" for="codeInput">Pairing code</label>
+          <input class="text-input" id="codeInput" maxlength="6" placeholder="ABC123"
+                 autocomplete="off" autocapitalize="characters" spellcheck="false">
+          <button class="btn btn-primary btn-glow btn-block" id="btnConnect">Connect</button>
+          <div class="form-error" id="connectError" hidden></div>
+        </div>
+
+        <div class="glass-panel" id="waitingCard" hidden>
+          <h2 class="panel-title"><span class="accent-bar"></span>Request Sent</h2>
+          <p class="panel-sub" id="waitingSub">Waiting for the other person to accept...</p>
+          <div class="waiting"><span class="spinner"></span><span id="waitingText">Waiting for approval</span></div>
+          <button class="btn btn-ghost btn-block" id="btnCancelReq">Cancel Request</button>
+        </div>
+
+        <div class="glass-panel">
+          <h2 class="panel-title"><span class="accent-bar"></span>Connection Requests <span class="count-pill" id="reqCount">0</span></h2>
+          <p class="panel-sub">Accept a request to start a private peer-to-peer session.</p>
+          <div id="reqList"></div>
+          <p class="empty-note" id="reqEmpty">No pending requests.</p>
+        </div>
+
+        <div class="glass-panel">
+          <h2 class="panel-title"><span class="accent-bar"></span>Saved Devices</h2>
+          <p class="panel-sub">Devices you have paired with before. One tap to send a new request.</p>
+          <div id="deviceList"></div>
+          <p class="empty-note" id="deviceEmpty">No saved devices yet.</p>
+        </div>
       </section>
 
     </main>
@@ -195,11 +325,15 @@
     </footer>
   </div>
 
-  <!-- Bottom tab bar -->
+  <!-- Developer credit, just above the navbar -->
+  <p class="dev-credit">NECXY DEVELOPER</p>
+
+  <!-- Bottom tab bar: floating glass pill -->
   <nav class="tabbar" aria-label="Main navigation">
-    <button class="tab active" id="tabPair"><svg class="ic"><use href="#icon-key"/></svg><span>Pair</span></button>
-    <button class="tab" id="tabRequests"><svg class="ic"><use href="#icon-inbox"/></svg><span>Requests</span><span class="badge" id="tabBadge" hidden>0</span></button>
+    <button class="tab active" id="tabFiles"><svg class="ic"><use href="#icon-files"/></svg><span>Files</span></button>
     <button class="tab" id="tabChat"><svg class="ic"><use href="#icon-chat"/></svg><span>Chat</span></button>
+    <button class="tab" id="tabCalls"><svg class="ic"><use href="#icon-phone"/></svg><span>Calls</span></button>
+    <button class="tab" id="tabConnect"><svg class="ic"><use href="#icon-nodes"/></svg><span>Connect</span><span class="badge" id="tabBadge" hidden>0</span></button>
   </nav>
 
   <!-- Call overlay -->
@@ -217,7 +351,7 @@
         <p id="incomingSub">Voice call from connected peer</p>
         <div class="incoming-actions">
           <button class="icon-btn danger" id="btnDeclineCall" aria-label="Decline call" style="width:64px;height:64px"><svg class="ic"><use href="#icon-hangup"/></svg></button>
-          <button class="icon-btn" id="btnAcceptCall" aria-label="Accept call" style="width:64px;height:64px;background:linear-gradient(135deg,#1fae5f,#178a4b);border:none"><svg class="ic"><use href="#icon-phone"/></svg></button>
+          <button class="icon-btn" id="btnAcceptCall" aria-label="Accept call" style="width:64px;height:64px;background:linear-gradient(135deg,#ff2a2a,#b30000);border:none"><svg class="ic"><use href="#icon-phone"/></svg></button>
         </div>
       </div>
     </div>
@@ -233,7 +367,8 @@
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-  <script src="js/firebase-config.js?v=3"></script>
-  <script src="js/app.js?v=3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+  <script src="js/firebase-config.js?v=4"></script>
+  <script src="js/app.js?v=4"></script>
 </body>
 </html>

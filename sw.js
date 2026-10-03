@@ -1,6 +1,6 @@
 /* NecShare service worker — cache-first for local assets only.
    Firebase/CDN/API traffic always goes to the network. */
-var CACHE = "necshare-v2";
+var CACHE = "necshare-v3";
 var ASSETS = [
   "./",
   "index.html",
