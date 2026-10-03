@@ -990,7 +990,7 @@
   }
 
   function init() {
-    if (typeof firebase === "undefined" || typeof window.firebaseConfig === "undefined" ||
+    if (typeof firebase === "undefined" || typeof firebaseConfig === "undefined" ||
         !firebaseConfig || firebaseConfig.apiKey === "PASTE_YOURS") {
       fatal("Firebase is not configured. Add your web app config to js/firebase-config.js and enable Realtime Database.");
       return;
